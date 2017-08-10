@@ -70,8 +70,21 @@
 #include <windows.h>
 #endif
 
+#if defined(__GENODE__)
+
+// For strrchr
+#include <string.h>
+
+// For program name
+extern char **genode_argv;
+extern int    genode_argc;
+
+#endif
+
 #if defined(_WIN32)
 typedef uint32_t thread_id;
+#elif defined(__GENODE__)
+typedef uint64_t thread_id;
 #else
 typedef pid_t thread_id;
 #endif
@@ -85,8 +98,16 @@ static thread_id GetThreadId() {
   return syscall(__NR_gettid);
 #elif defined(_WIN32)
   return GetCurrentThreadId();
+#elif defined(__GENODE__)
+  return (uint64_t)pthread_self();
 #endif
 }
+
+#if defined(__GENODE__)
+#define TID_FMT "%lu"
+#else
+#define TID_FMT "%5d"
+#endif
 
 namespace {
 #if defined(__GLIBC__)
@@ -203,7 +224,7 @@ void StderrLogger(LogId, LogSeverity severity, const char*, const char* file,
   static_assert(arraysize(log_characters) - 1 == FATAL + 1,
                 "Mismatch in size of log_characters and values in LogSeverity");
   char severity_char = log_characters[severity];
-  fprintf(stderr, "%s %c %s %5d %5d %s:%u] %s\n", ProgramInvocationName().c_str(),
+  fprintf(stderr, "%s %c %s %5d " TID_FMT " %s:%u] %s\n", ProgramInvocationName().c_str(),
           severity_char, timestamp, getpid(), GetThreadId(), file, line, message);
 }
 
