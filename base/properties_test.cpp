@@ -23,8 +23,6 @@
 #include <string>
 #include <thread>
 
-using namespace std::chrono_literals;
-
 TEST(properties, smoke) {
   android::base::SetProperty("debug.libbase.property_test", "hello");
 
