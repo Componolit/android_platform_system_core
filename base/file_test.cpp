@@ -138,7 +138,7 @@ TEST(file, Readlink) {
   // size of the encrypted symlink target. There's also an off-by-one
   // in current kernels (and marlin/sailfish where we're seeing this
   // failure are still on 3.18, far from current). http://b/33306057.
-  std::string max(static_cast<size_t>(4096 - 2 - 1 - 1), 'x');
+  std::string max(static_cast<size_t>(1024), 'x');
 
   TemporaryDir td;
   std::string min_path{std::string(td.path) + "/" + "min"};
