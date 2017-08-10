@@ -26,6 +26,8 @@
 
 #include "android-base/test_utils.h"
 
+#ifndef __GENODE__
+
 // These tests are a bit sketchy, since each test run adds global state that affects subsequent
 // tests (including ones not in this file!). Exit with 0 in Exiter and stick the at_quick_exit test
 // at the end to hack around this.
@@ -52,3 +54,4 @@ TEST(quick_exit, at_quick_exit) {
   ASSERT_EQ(0, android::base::at_quick_exit([]() { counter *= 10; }));
   ASSERT_EXIT(android::base::quick_exit(123), testing::ExitedWithCode(42), "");
 }
+#endif // __GENODE__
