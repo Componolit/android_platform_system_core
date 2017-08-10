@@ -24,6 +24,10 @@
 #define O_BINARY 0
 #endif
 
+#if !defined(_WIN32) && !defined(O_CLOEXEC)
+#define O_CLOEXEC 0
+#endif
+
 namespace android {
 namespace base {
 
