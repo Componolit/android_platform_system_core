@@ -27,8 +27,6 @@
 
 #include <android-base/parseint.h>
 
-using namespace std::chrono_literals;
-
 namespace android {
 namespace base {
 
