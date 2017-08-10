@@ -58,7 +58,7 @@ public:
     log_time()
     {
     }
-#ifdef __linux__
+#if defined(__linux__) || defined(__GENODE__)
     log_time(clockid_t id)
     {
         timespec T;
