@@ -60,7 +60,7 @@ struct log_time {
 #endif
   log_time() {
   }
-#ifdef __linux__
+#if defined(__linux__) || defined(__GENODE__)
   explicit log_time(clockid_t id) {
     timespec T;
     clock_gettime(id, &T);
