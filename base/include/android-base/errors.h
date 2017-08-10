@@ -32,6 +32,10 @@
 
 #include <string>
 
+#ifdef __GENODE__
+#include <string.h>
+#endif
+
 namespace android {
 namespace base {
 
