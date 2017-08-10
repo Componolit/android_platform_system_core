@@ -37,12 +37,17 @@
 #define HOST_TEST(suite, name) TEST(suite, name)
 #endif
 
+#ifdef __GENODE__
+#define ASSERT_DEATH(u1,u2)
+#endif
+
 #if defined(_WIN32)
 static void ExitSignalAbortHandler(int) {
   _exit(3);
 }
 #endif
 
+static void SuppressAbortUI() __attribute__((unused));
 static void SuppressAbortUI() {
 #if defined(_WIN32)
   // We really just want to call _set_abort_behavior(0, _CALL_REPORTFAULT) to
