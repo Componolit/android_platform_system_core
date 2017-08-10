@@ -32,7 +32,7 @@ TEST_F(NativeBridgeTest, CodeCacheStatFail) {
 
     struct stat st;
     ASSERT_EQ(-1, stat(kCodeCacheStatFail, &st));
-    ASSERT_EQ(ENOTDIR, errno);
+    ASSERT_EQ(ENOENT, errno);
 
     // Init
     ASSERT_TRUE(LoadNativeBridge(kNativeBridgeLibrary, nullptr));
