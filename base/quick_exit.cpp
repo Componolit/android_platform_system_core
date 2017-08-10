@@ -21,6 +21,11 @@
 #include <mutex>
 #include <vector>
 
+// _Exit() is available in C99 only
+#ifdef __GENODE__
+#define _Exit(x) exit(x)
+#endif
+
 namespace android {
 namespace base {
 
