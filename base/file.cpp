@@ -42,6 +42,16 @@
 #define O_NOFOLLOW 0
 #endif
 
+#if defined(__GENODE__)
+
+// For strrchr
+#include <string.h>
+
+// For program name
+extern char **genode_argv;
+extern int    genode_argc;
+#endif
+
 namespace android {
 namespace base {
 
@@ -251,6 +261,11 @@ std::string GetExecutablePath() {
   if (result == 0 || result == sizeof(path) - 1) return "";
   path[PATH_MAX - 1] = 0;
   return path;
+#elif defined(__GENODE__)
+  if (::genode_argc > 0) {
+    return ::genode_argv[0];
+  }
+  return "/main";
 #else
 #error unknown OS
 #endif
