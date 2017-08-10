@@ -40,6 +40,8 @@ pid_t gettid() {
   return syscall(__NR_gettid);
 #elif defined(_WIN32)
   return GetCurrentThreadId();
+#elif defined(__GENODE__)
+  return 42;
 #endif
 }
 #endif  // __ANDROID__
