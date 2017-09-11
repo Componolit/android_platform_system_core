@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <string.h>
 #include "entry_name_utils-inl.h"
 #include "zip_archive_common.h"
 #include "ziparchive/zip_writer.h"
