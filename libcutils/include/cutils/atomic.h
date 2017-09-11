@@ -19,6 +19,8 @@
 
 #include <stdint.h>
 #include <sys/types.h>
+
+#undef ATOMIC_VAR_INIT
 #include <stdatomic.h>
 
 #ifndef ANDROID_ATOMIC_INLINE
