@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <string.h>
 #include "ziparchive/zip_writer.h"
 
 #include <sys/param.h>
