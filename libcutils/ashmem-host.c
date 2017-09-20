@@ -45,7 +45,11 @@ int ashmem_create_region(const char *ignored __unused, size_t size)
     int fd = mkstemp(template);
     if (fd == -1) return -1;
 
-    unlink(template);
+    // FIXME: On Genode, unlink() implementation has not reference counting, yet. Hence,
+    // the file node gets descroyed on unlink and subsequent operations fail. In the
+    // future either add the unlink or replace the whole ashmem backend by something
+    // Genode specific (preferred!)
+    //unlink(template);
 
     if (TEMP_FAILURE_RETRY(ftruncate(fd, size)) == -1) {
       close(fd);
