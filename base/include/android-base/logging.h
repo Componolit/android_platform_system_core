@@ -89,6 +89,10 @@ using AbortFunction = std::function<void(const char*)>;
 void KernelLogger(LogId, LogSeverity, const char*, const char*, unsigned int, const char*);
 void StderrLogger(LogId, LogSeverity, const char*, const char*, unsigned int, const char*);
 
+#ifdef __GENODE__
+void GenodeLogger(LogId, LogSeverity, const char*, const char*, unsigned int, const char*);
+#endif
+
 void DefaultAborter(const char* abort_message);
 
 #ifdef __ANDROID__

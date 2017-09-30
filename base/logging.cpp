@@ -31,6 +31,11 @@
 #include <errno.h>
 #endif
 
+#if defined(__GENODE__)
+#include <base/log.h>
+#include <util/string.h>
+#endif
+
 #if defined(__linux__)
 #include <sys/uio.h>
 #endif
@@ -147,6 +152,8 @@ static std::mutex& LoggingLock() {
 static LogFunction& Logger() {
 #ifdef __ANDROID__
   static auto& logger = *new LogFunction(LogdLogger());
+#elif defined(__GENODE__)
+  static auto& logger = *new LogFunction(GenodeLogger);
 #else
   static auto& logger = *new LogFunction(StderrLogger);
 #endif
@@ -227,6 +234,26 @@ void StderrLogger(LogId, LogSeverity severity, const char*, const char* file,
   fprintf(stderr, "%s %c %s %5d " TID_FMT " %s:%u] %s\n", ProgramInvocationName().c_str(),
           severity_char, timestamp, getpid(), GetThreadId(), file, line, message);
 }
+
+#ifdef __GENODE__
+void GenodeLogger(LogId, LogSeverity severity, const char*, const char* file,
+                  unsigned int line, const char* message) {
+  struct tm now;
+  time_t t = time(nullptr);
+
+  localtime_r(&t, &now);
+
+  char timestamp[32];
+  strftime(timestamp, sizeof(timestamp), "%m-%d %H:%M:%S", &now);
+
+  static const char log_characters[] = "VDIWEFF";
+  static_assert(arraysize(log_characters) - 1 == FATAL + 1,
+                "Mismatch in size of log_characters and values in LogSeverity");
+  char severity_char = log_characters[severity];
+  Genode::log(Genode::Cstring(ProgramInvocationName().c_str()), " ", severity_char, " ", Genode::Cstring(timestamp),
+	" ", Genode::Cstring(file), " ", line, " ", Genode::Cstring(message));
+}
+#endif
 
 void DefaultAborter(const char* abort_message) {
 #ifdef __ANDROID__
