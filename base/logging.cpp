@@ -79,6 +79,7 @@
 
 // For strrchr
 #include <string.h>
+#include <base/thread.h>
 
 // For program name
 extern char **genode_argv;
@@ -104,7 +105,7 @@ static thread_id GetThreadId() {
 #elif defined(_WIN32)
   return GetCurrentThreadId();
 #elif defined(__GENODE__)
-  return (uint64_t)pthread_self();
+  return (uint64_t)Genode::Thread::myself();
 #endif
 }
 
