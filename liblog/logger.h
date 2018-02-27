@@ -152,7 +152,7 @@ struct android_log_transport_context {
 
 LIBLOG_HIDDEN struct listnode __android_log_readers;
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__GENODE__)
 #define logger_list_rdlock()
 #define logger_list_wrlock()
 #define logger_list_unlock()
