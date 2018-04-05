@@ -41,7 +41,7 @@ pid_t gettid() {
 #elif defined(_WIN32)
   return GetCurrentThreadId();
 #elif defined(__GENODE__)
-  return 42;
+  return gettid();
 #endif
 }
 #endif  // __ANDROID__
