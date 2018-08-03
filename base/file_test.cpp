@@ -182,7 +182,7 @@ TEST(file, Realpath) {
 
   {
     errno = 0;
-    std::string path = std::string(td.path) + "/foo.noent";
+    std::string path = std::string(td.path) + "/foo.noent/";
     std::string result = "wrong";
     ASSERT_TRUE(!android::base::Realpath(path, &result));
     ASSERT_TRUE(result.empty());
