@@ -68,6 +68,8 @@
 #include <unistd.h>
 #elif defined(_WIN32)
 #include <windows.h>
+#elif defined(__GENODE__)
+#include <base/thread.h>
 #endif
 
 #if defined(_WIN32)
@@ -87,6 +89,8 @@ static thread_id GetThreadId() {
   return syscall(__NR_gettid);
 #elif defined(_WIN32)
   return GetCurrentThreadId();
+#elif defined(__GENODE__)
+  return (uint64_t)Genode::Thread::myself();
 #endif
 }
 
