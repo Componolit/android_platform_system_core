@@ -282,6 +282,8 @@ std::string GetExecutablePath() {
   if (result == 0 || result == sizeof(path) - 1) return "";
   path[PATH_MAX - 1] = 0;
   return path;
+#elif defined(__GENODE__)
+   return "/bin/executable";
 #else
 #error unknown OS
 #endif
