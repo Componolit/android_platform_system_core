@@ -1644,7 +1644,7 @@ LIBLOG_ABI_PUBLIC char* android_log_formatLogLine(AndroidLogFormat* p_format,
  * This code is Android specific, bionic guarantees that
  * calls to non-reentrant getpwuid() are thread safe.
  */
-#if !defined(__MINGW32__)
+#if !defined(__MINGW32__) && !defined(__GENODE__)
 #if (FAKE_LOG_DEVICE == 0)
 #ifndef __BIONIC__
 #warning \
