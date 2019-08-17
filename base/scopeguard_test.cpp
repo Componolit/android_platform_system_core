@@ -46,6 +46,7 @@ TEST(scopeguard, moved) {
   ASSERT_FALSE(guarded_var);
 }
 
+#ifndef __GENODE__
 TEST(scopeguard, vector) {
   int guarded_var = 0;
   {
@@ -57,3 +58,4 @@ TEST(scopeguard, vector) {
   }
   ASSERT_EQ(guarded_var, 2);
 }
+#endif

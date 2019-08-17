@@ -22,7 +22,9 @@
 #include <signal.h>
 #endif
 
+#ifndef __GENODE__
 #include <regex>
+#endif
 #include <string>
 
 #include "android-base/file.h"
@@ -192,7 +194,7 @@ TEST(logging, WOULD_LOG_VERBOSE_enabled) {
 #undef CHECK_WOULD_LOG_ENABLED
 
 
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__GENODE__)
 static std::string make_log_pattern(android::base::LogSeverity severity,
                                     const char* message) {
   static const char log_characters[] = "VDIWEFF";
@@ -221,7 +223,7 @@ static void CheckMessage(const CapturedStderr& cap, android::base::LogSeverity s
     ASSERT_NE(nullptr, strstr(output.c_str(), expected_tag)) << output;
   }
 
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__GENODE__)
   std::string regex_str;
   if (expected_tag != nullptr) {
     regex_str.append(expected_tag);
@@ -606,9 +608,11 @@ TEST(logging, LOG_FATAL_ABORTER_MESSAGE) {
   EXPECT_EQ(CountLineAborter::newline_count, 1U + 1U);  // +1 for final '\n'.
 }
 
+#ifndef __GENODE__
 __attribute__((constructor)) void TestLoggingInConstructor() {
   LOG(ERROR) << "foobar";
 }
+#endif
 
 TEST(logging, SetDefaultTag) {
   constexpr const char* expected_tag = "test_tag";
