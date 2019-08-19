@@ -291,7 +291,9 @@ void InitLogging(char* argv[], LogFunction&& logger, AbortFunction&& aborter) {
   // Linux to recover this, but we don't have that luxury on the Mac/Windows,
   // and there are a couple of argv[0] variants that are commonly used.
   if (argv != nullptr) {
-    SetDefaultTag(basename(argv[0]));
+    char *progname = strdup(argv[0]);
+    SetDefaultTag(basename(progname));
+    free(progname);
   }
 
   const char* tags = getenv("ANDROID_LOG_TAGS");
