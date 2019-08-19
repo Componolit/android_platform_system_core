@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
+#include <inttypes.h>
 
 #include <string>
 
@@ -41,7 +42,7 @@ TEST(liblog, __android_log_write__android_logger_list_read) {
 
   struct timespec ts;
   clock_gettime(CLOCK_MONOTONIC, &ts);
-  std::string buf = android::base::StringPrintf("pid=%u ts=%ld.%09ld", pid,
+  std::string buf = android::base::StringPrintf("pid=%u ts=%" PRId64 ".%09ld", pid,
                                                 ts.tv_sec, ts.tv_nsec);
   static const char tag[] =
       "liblog.__android_log_write__android_logger_list_read";
