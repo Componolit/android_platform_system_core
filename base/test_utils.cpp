@@ -139,13 +139,19 @@ void CapturedStderr::init() {
   // that we can immediately read back what was written to stderr.
   CHECK_EQ(0, setvbuf(stderr, NULL, _IONBF, 0));
 #endif
+// Componolit/Workarounds#4
+#if !defined(__GENODE__)
   old_stderr_ = dup(STDERR_FILENO);
   CHECK_NE(-1, old_stderr_);
+#endif
   CHECK_NE(-1, dup2(fd(), STDERR_FILENO));
 }
 
 void CapturedStderr::reset() {
+// Componolit/Workarounds#4
+#if !defined(__GENODE__)
   CHECK_NE(-1, dup2(old_stderr_, STDERR_FILENO));
   CHECK_EQ(0, close(old_stderr_));
+#endif
   // Note: cannot restore prior setvbuf() setting.
 }
