@@ -581,6 +581,10 @@ LIBLOG_ABI_PUBLIC const char* android_lookupEventTag(const EventTagMap* map,
 LIBLOG_ABI_PUBLIC int android_lookupEventTagNum(EventTagMap* map,
                                                 const char* tagname,
                                                 const char* format, int prio) {
+  if (!map) {
+    errno = EINVAL;
+    return -1;
+  }
   const char* ep = endOfTag(tagname);
   size_t len = ep - tagname;
   if (!len || *ep) {
