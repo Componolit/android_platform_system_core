@@ -29,17 +29,16 @@
 namespace android {
 
 TEST(SingletonTest, bug35674422) {
-    std::string path = android::base::GetExecutableDirectory();
     // libutils_tests_singleton1.so contains the ANDROID_SINGLETON_STATIC_INSTANCE
     // definition of SingletonTestData, load it first.
-    std::string lib = android::base::StringPrintf("%s/libutils_tests_singleton1.so", path.c_str());
-    void* handle1 = dlopen(lib.c_str(), RTLD_NOW);
+    std::string lib = android::base::StringPrintf("gart_libutils_tests_singleton1.lib.so");
+    void* handle1 = dlopen(lib.c_str(), RTLD_LAZY);
     ASSERT_TRUE(handle1 != nullptr) << dlerror();
 
     // libutils_tests_singleton2.so references SingletonTestData but should not
     // have a definition
-    lib = android::base::StringPrintf("%s/libutils_tests_singleton2.so", path.c_str());
-    void* handle2 = dlopen(lib.c_str(), RTLD_NOW);
+    lib = android::base::StringPrintf("gart_libutils_tests_singleton2.lib.so");
+    void* handle2 = dlopen(lib.c_str(), RTLD_LAZY);
     ASSERT_TRUE(handle2 != nullptr) << dlerror();
 
     using has_fn_t = decltype(&singletonHasInstance);
