@@ -114,7 +114,7 @@ TEST_F(UnicodeTest, UTF8toUTF16Normal) {
             << "should be first half of surrogate U+10000";
     EXPECT_EQ(0xDC00, output[4])
             << "should be second half of surrogate U+10000";
-    EXPECT_EQ(NULL, output[5])
+    EXPECT_EQ(0, output[5])
             << "should be NULL terminated";
 }
 
