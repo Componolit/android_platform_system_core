@@ -74,13 +74,13 @@ TEST(ziparchive, Open) {
   ASSERT_EQ(0, OpenArchiveWrapper(kValidZip, &handle));
   CloseArchive(handle);
 
-  ASSERT_EQ(-1, OpenArchiveWrapper(kBadFilenameZip, &handle));
+  ASSERT_GT(0, OpenArchiveWrapper(kBadFilenameZip, &handle));
   CloseArchive(handle);
 }
 
 TEST(ziparchive, OutOfBound) {
   ZipArchiveHandle handle;
-  ASSERT_EQ(-8, OpenArchiveWrapper(kCrashApk, &handle));
+  ASSERT_GT(0, OpenArchiveWrapper(kCrashApk, &handle));
   CloseArchive(handle);
 }
 
