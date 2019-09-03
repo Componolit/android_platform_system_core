@@ -33,6 +33,7 @@
 #include <iterator>
 #include <string>
 #include <vector>
+#include <memory>
 
 // Forward declaration.
 struct backtrace_stackinfo_t;

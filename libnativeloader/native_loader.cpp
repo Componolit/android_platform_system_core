@@ -28,6 +28,7 @@
 #include <sys/types.h>
 #include "nativebridge/native_bridge.h"
 
+#include <functional>
 #include <algorithm>
 #include <memory>
 #include <mutex>
