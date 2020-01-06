@@ -716,7 +716,7 @@ int Thread::_threadLoop(void* user)
     wp<Thread> weak(strong);
     self->mHoldSelf.clear();
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) && !defined(__GENODE__)
     // this is very useful for debugging with gdb
     self->mTid = gettid();
 #endif
