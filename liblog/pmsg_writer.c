@@ -145,7 +145,7 @@ static int pmsgWrite(log_id_t logId, struct timespec* ts, struct iovec* vec,
   pmsgHeader.pid = getpid();
 
   header.id = logId;
-  header.tid = 0;
+  header.tid = gettid();
   header.realtime.tv_sec = ts->tv_sec;
   header.realtime.tv_nsec = ts->tv_nsec;
 
